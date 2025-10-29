@@ -102,3 +102,48 @@ function resetScore(){
     updateScoreElement();
     alert('Score reset');
 }
+
+let isAutoPlaying = false;
+let intervalId;
+
+function autoPlay(){
+    const autoPlayButtonElement = document.querySelector('.js-auto-play-button');
+    if (!isAutoPlaying){
+        autoPlayButtonElement.innerText = "Stop Auto Play";
+        intervalId = setInterval(function(){
+        const playerMove = pickComputerMove();
+        playGame(playerMove);
+    }, 1000);
+    isAutoPlaying = true;
+    }
+    else{
+        clearInterval(intervalId);
+        autoPlayButtonElement.innerText = "Start Auto Play";
+        isAutoPlaying = false;
+    }
+
+}
+
+document.querySelector('.js-rock-button').addEventListener('click', () =>{
+    playGame('rock');
+});
+
+document.querySelector('.js-paper-button').addEventListener('click', () =>{
+    playGame('paper');
+});
+
+document.querySelector('.js-scissors-button').addEventListener('click', () =>{
+    playGame('scissors');
+});
+
+document.addEventListener('keydown', (event)=>{
+    if (event.key === 'r'){
+        playGame('rock');
+    }
+    else if (event.key === 'p'){
+        playGame('paper');
+    }
+    else if (event.key === 's'){
+        playGame('scissors');
+    }
+})
